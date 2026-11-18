@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+
+# Bases de données réelles (ne jamais publier)
+DB_TCE*.sqlite
+*.sqlite
+
+# Rapports générés
+web/rapports/
+*.pdf
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.iml
+*.apk
+
+# Divers
+.DS_Store
+Thumbs.db
