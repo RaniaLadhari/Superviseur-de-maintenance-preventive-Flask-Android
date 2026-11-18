@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Erreurs {{ machine.code }} — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(760px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Erreurs — {{ machine.code }}</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">DATE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">RÉFÉRENCE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">TYPE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">DURÉE (ms)</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">RÉSOLUE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in erreurs %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 0;">{{ e.date_detection.strftime("%d/%m/%Y %H:%M") }}</td>
+        <td style="padding: 8px 0;">{{ e.reference or "-" }}</td>
+        <td style="padding: 8px 0; color: var(--text-muted);">{{ e.type_erreur }}</td>
+        <td style="padding: 8px 0;">{{ e.duree_ms or "-" }}</td>
+        <td style="padding: 8px 0;">
+          {% if e.resolue %}<span style="color: var(--ok);">Oui</span>{% else %}<span style="color: var(--danger);">Non</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% if not erreurs %}
+      <tr><td colspan="5" style="padding: 20px 0; color: var(--text-muted);">Aucune erreur enregistrée pour cette machine.</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer">
+    <a href="{{ url_for('maintenance.liste_erreurs') }}" style="color: var(--text-muted);">← Retour</a>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

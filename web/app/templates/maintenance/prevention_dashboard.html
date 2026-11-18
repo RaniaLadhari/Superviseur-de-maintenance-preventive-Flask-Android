@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Prévention TCE — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(650px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Maintenance — Prévention (TCE)</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+  <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem;">MACHINE</th>
+  <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem;">STATUT</th>
+  <th></th>
+  <th></th>
+</tr>
+    </thead>
+    <tbody>
+      {% for machine in machines %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 10px 0;">{{ machine.code }}</td>
+        <td style="padding: 10px 0;">
+          {% set s = seances_actives.get(machine.id) %}
+          {% if not s %}
+            <span style="color: var(--text-muted);">Aucun comptage actif</span>
+          {% elif s.statut.value == "en_cours" %}
+            <span style="color: var(--ok);">En cours ({{ s.nb_cables_comptes }}/{{ s.seuil_applique }})</span>
+          {% elif s.statut.value == "bloque" %}
+            <span style="color: var(--danger); font-weight: 600;">BLOQUÉE</span>
+          {% endif %}
+        </td>
+        <td style="padding: 10px 0; text-align:right;">
+          {% if s %}
+            <a href="{{ url_for('maintenance.voir_seance', seance_id=s.id) }}" style="color: var(--accent);">Voir →</a>
+          {% else %}
+            <form method="POST" action="{{ url_for('maintenance.demarrer_comptage', machine_id=machine.id) }}" style="display:flex; gap:6px; align-items:center; justify-content:flex-end;">
+            <input type="number" name="seuil" value="{{ machine.seuil_comptage or 50 }}" min="1" style="width: 70px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; color: var(--text-primary); font-family: var(--font-mono); font-size: 0.85rem;">
+            <button type="submit" class="btn-primary" style="width:auto; padding: 6px 14px; font-size:0.85rem;">Démarrer</button>
+            </form>
+          {% endif %}
+        </td>
+        <td style="padding: 10px 0; text-align:right;">
+          <a href="{{ url_for('maintenance.checklist_historique', machine_id=machine.id) }}" style="color: var(--accent);">Checklist →</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer">
+    <a href="{{ url_for('maintenance.liste_erreurs') }}" style="color: var(--text-muted);">← Erreurs machine</a>
+    <a href="{{ url_for('maintenance.historique_interventions') }}" style="color: var(--accent);">Historique interventions →</a>
+  </div>
+</div>
+{% endblock %}

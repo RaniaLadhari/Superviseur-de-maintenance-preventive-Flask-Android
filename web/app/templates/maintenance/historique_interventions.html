@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Historique interventions — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(800px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Historique global — Interventions préventives</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">DATE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">MACHINE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">TECHNICIEN</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">TYPE</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rapports %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 10px 0; font-size: 0.85rem;">{{ r.date_intervention.strftime("%d/%m/%Y %H:%M") }}</td>
+        <td style="padding: 10px 0; font-size: 0.85rem;">{{ r.seance.machine.code }}</td>
+        <td style="padding: 10px 0; font-size: 0.85rem; color: var(--text-muted);">{{ r.technicien.nom_complet }}</td>
+        <td style="padding: 10px 0; font-size: 0.85rem;">{{ r.type_action }}</td>
+        <td style="padding: 10px 0; text-align:right;">
+          <a href="{{ url_for('maintenance.voir_rapport', rapport_id=r.id) }}" style="color: var(--accent); font-size: 0.85rem;">Voir →</a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if not rapports %}
+      <tr><td colspan="5" style="padding: 20px 0; color: var(--text-muted);">Aucune intervention enregistrée.</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer">
+    <a href="{{ url_for('maintenance.prevention_dashboard') }}" style="color: var(--text-muted);">← Prévention</a>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

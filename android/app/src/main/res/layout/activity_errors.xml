@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1117">
+
+    <!-- ===================================================== -->
+    <!-- CONTENU PRINCIPAL -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0D1117"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- HEADER -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/btnMenu"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:gravity="center"
+                    android:text="☰"
+                    android:textColor="#F2F2F2"
+                    android:textSize="24sp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="COFAT Sense"
+                        android:textColor="#F2F2F2"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="MAINTENANCE — ERREURS MACHINE"
+                        android:textColor="#8994A5"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="●"
+                    android:textColor="#36E28B"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+
+            <!-- ESPACE -->
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp"/>
+
+
+            <!-- EN-TÊTE TABLEAU -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="MACHINE"
+                    android:textColor="#A7B0BE"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="NB ERREURS"
+                    android:textColor="#A7B0BE"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2A3442"/>
+
+
+            <!-- ================================================= -->
+            <!-- MACHINE 404 -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/row404"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="TCE-02"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/detail404"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Détail →"
+                    android:textColor="#FF841B"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="6dp"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2A3442"/>
+
+
+            <!-- ================================================= -->
+            <!-- MACHINE 590 -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/row590"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="TCE-01"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/detail590"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Détail →"
+                    android:textColor="#FF841B"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="6dp"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2A3442"/>
+
+
+            <!-- ================================================= -->
+            <!-- MACHINE HETOS -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/rowHETOSIMPORT"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="TCE-HIST"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="#E8EBEF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/detailHetos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Détail →"
+                    android:textColor="#FF841B"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="6dp"/>
+
+            </LinearLayout>
+
+
+            <!-- RETOUR PRODUCTION -->
+
+            <TextView
+                android:id="@+id/backProduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="← Dashboard Production"
+                android:textColor="#8D98A9"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ===================================================== -->
+    <!-- MENU LATERAL -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:id="@+id/drawerMenu"
+        android:layout_width="285dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:background="#19212C"
+        android:padding="20dp">
+
+        <!-- LOGO -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COFAT"
+                android:textColor="#F2F2F2"
+                android:textSize="21sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Sense"
+                android:textColor="#FF841B"
+                android:textSize="21sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+        <!-- NAVIGATION -->
+
+        <TextView
+            android:id="@+id/navProduction"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Production"
+            android:textColor="#A7B0BE"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/navErrors"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Erreurs machine"
+            android:textColor="#FF841B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/navPrevention"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Prévention (TCE)"
+            android:textColor="#A7B0BE"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/navInterventions"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Historique interventions"
+            android:textColor="#A7B0BE"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/navHealth"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Health Score"
+            android:textColor="#A7B0BE"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/navCopilot"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Copilot IA"
+            android:textColor="#A7B0BE"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
+
+
+        <!-- ESPACE -->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+
+        <!-- SEPARATEUR -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A3442"/>
+
+
+        <!-- UTILISATEUR -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Karim Mansour"
+            android:textColor="#A7B0BE"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="responsable"
+            android:textColor="#8994A5"
+            android:textSize="11sp"/>
+
+
+        <!-- DECONNEXION -->
+
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="Déconnexion"
+            android:textColor="#FF4B5C"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

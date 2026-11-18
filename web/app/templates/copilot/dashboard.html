@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Copilot — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(720px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Copilot IA — Priorisation &amp; analyse</p>
+
+  <p class="eyebrow" style="margin-top:16px;">Priorisation des interventions</p>
+  <table style="width:100%; border-collapse: collapse; margin-top: 6px; margin-bottom: 20px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 6px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem;">MACHINE</th>
+        <th style="padding: 6px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem;">URGENCE</th>
+        <th style="padding: 6px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem;">JUSTIFICATION</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in priorites %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 0; font-size:0.85rem;">{{ p.machine.code }}</td>
+        <td style="padding: 8px 0;">
+          {% if p.urgence == "Élevée" %}<span style="color: var(--danger); font-weight:600;">{{ p.urgence }}</span>
+          {% elif p.urgence == "Modérée" %}<span style="color: var(--accent); font-weight:600;">{{ p.urgence }}</span>
+          {% else %}<span style="color: var(--ok);">{{ p.urgence }}</span>{% endif %}
+        </td>
+        <td style="padding: 8px 0; color: var(--text-muted); font-size:0.8rem;">{{ p.raison }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="eyebrow">Estimation de risque de panne</p>
+  <table style="width:100%; border-collapse: collapse; margin-top: 6px; margin-bottom: 20px;">
+    <tbody>
+      {% for r in risques %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 0; font-size:0.85rem;">{{ r.machine.code }}</td>
+        <td style="padding: 8px 0; color: var(--text-muted); font-size:0.85rem; text-align:right;">Intervention {{ r.delai }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="eyebrow">Composants les plus en cause (global)</p>
+  <table style="width:100%; border-collapse: collapse; margin-top: 6px;">
+    <tbody>
+      {% for ref, nb in top_composants %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 0; font-size:0.85rem;">{{ ref or "-" }}</td>
+        <td style="padding: 8px 0; color: var(--danger); font-weight:600; text-align:right;">{{ nb }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer" style="justify-content: flex-start; gap: 20px;">
+    <a href="{{ url_for('production.dashboard') }}" style="color: var(--text-muted);">← Dashboard</a>
+    <a href="{{ url_for('copilot.simulation') }}" style="color: var(--accent);">Simulateur "et si..." →</a>
+  </div>
+</div>
+{% endblock %}

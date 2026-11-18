@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Rapport — {{ machine.code }} — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(600px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Rapport d'analyse — {{ machine.code }}</p>
+  <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -18px;">Top 10 références par nombre d'erreurs</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem;">RÉFÉRENCE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem;">NB ERREURS</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem;">DURÉE MOY. (ms)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ref, nb, duree_moy in top_references %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 10px 0;">{{ ref or "-" }}</td>
+        <td style="padding: 10px 0; color: var(--danger); font-weight: 600;">{{ nb }}</td>
+        <td style="padding: 10px 0; color: var(--text-muted);">{{ duree_moy | round(0) if duree_moy else "-" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer">
+    <a href="{{ url_for('maintenance.erreurs_machine', machine_id=machine.id) }}" style="color: var(--text-muted);">← Détail des erreurs</a>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

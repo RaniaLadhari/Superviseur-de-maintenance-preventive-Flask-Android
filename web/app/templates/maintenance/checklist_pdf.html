@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 12mm; }
+  body { font-family: Arial, sans-serif; font-size: 10px; color: #000; }
+
+  table { width: 100%; border-collapse: collapse; }
+  td, th { border: 1px solid #000; padding: 4px 6px; vertical-align: middle; background: #fff; color: #000; }
+
+  .entete-table { margin-bottom: 0; }
+  .entete-table td { border: 1px solid #000; padding: 6px 8px; }
+  .cell-logo { font-weight: bold; font-size: 16px; width: 18%; text-align: center; }
+  .cell-titre-principal { font-weight: bold; font-size: 13px; text-align: center; width: 52%; }
+  .cell-infos { width: 30%; font-size: 9px; line-height: 1.5; }
+
+  .bandeau-titre { font-weight: bold; font-size: 11px; text-align: center; padding: 5px; border: 1px solid #000; border-top: none; }
+
+  .ligne-machine { border: 1px solid #000; border-top: none; padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; }
+  .champ-label { font-weight: bold; font-size: 10px; }
+  .champ-valeur { border: 1px solid #000; font-weight: bold; padding: 2px 14px; display: inline-block; margin-left: 4px; }
+
+  /* Seule couleur autorisee dans tout le PDF : la frequence, en rouge */
+  .frequence-texte { color: #c00000; font-weight: bold; font-size: 10px; margin-top: 4px; margin-bottom: 10px; }
+
+  /* ---------- Tableau organes : NOIR ET BLANC ---------- */
+  .table-organes th { background: #fff; color: #000; font-size: 9.5px; text-align: center; font-weight: bold; }
+  .col-organe { width: 15%; font-weight: bold; }
+  .col-actions { width: 43%; text-align: left; font-size: 9px; }
+  .col-actions ul { margin: 0; padding-left: 14px; }
+  .col-actions li { margin-bottom: 2px; }
+  .col-inspection, .col-mp { width: 9%; text-align: center; font-weight: bold; }
+  .col-commentaire { width: 24%; font-size: 9px; }
+
+  .cat-tag {
+    display:inline-block; font-size:8px; font-weight:bold; text-transform:uppercase;
+    padding:2px 6px; border-radius:4px; margin-bottom:3px;
+    background: #fff; color: #000; border: 1px solid #000;
+  }
+
+  .table-organes { page-break-inside: auto; }
+  .table-organes thead { display: table-header-group; }
+  .table-organes tr { page-break-inside: avoid; page-break-after: auto; }
+
+  .obs-titre { font-weight: bold; text-decoration: underline; margin-top: 10px; margin-bottom: 4px; font-size: 10px; }
+  .obs-box { border: 1px solid #000; min-height: 40px; padding: 6px; font-size: 10px; page-break-inside: avoid; }
+
+  .table-signature { margin-top: 14px; page-break-inside: avoid; }
+  .table-signature th { background: #fff; color: #000; font-weight: bold; text-align: center; font-size: 9.5px; }
+  .table-signature td { text-align: center; font-size: 9.5px; height: 22px; background: #fff; color: #000; }
+  .table-signature .label-ligne { text-align: left; font-weight: bold; width: 12%; }
+</style>
+</head>
+<body>
+
+<table class="entete-table">
+  <tr>
+    <td class="cell-logo">COFAT</td>
+    <td class="cell-titre-principal">INSTRUCTION MAINTENANCE PREVENTIVE</td>
+    <td class="cell-infos">
+      Référence : MP-TCE-001<br>
+      Date d'émission : 01.02.2001<br>
+      Date maj : 01.06.2021/26
+    </td>
+  </tr>
+</table>
+<div class="bandeau-titre">TITRE : INSTRUCTION MAINTENANCE PREVENTIVE TABLE DE CONTROLE ELECTRIQUE</div>
+
+<div class="ligne-machine">
+  <div>
+    <span class="champ-label">Code Machine :</span>
+    <span class="champ-valeur">{{ execution.machine.code }}</span>
+  </div>
+  <div>
+    <span class="champ-label">Type machine :</span>
+    <span class="champ-valeur">{{ execution.template.type_machine }}</span>
+  </div>
+  <div>
+    <span class="champ-label">Semaine :</span>
+    <span class="champ-valeur">{{ execution.semaine }}</span>
+  </div>
+</div>
+<div class="frequence-texte">Fréquence : {{ execution.template.frequence_jours }} jours</div>
+
+<table class="table-organes">
+  <thead>
+    <tr>
+      <th class="col-organe">Organe</th>
+      <th class="col-actions">Actions</th>
+      <th class="col-inspection">Inspection</th>
+      <th class="col-mp">M.P</th>
+      <th class="col-commentaire">Commentaire</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for resultat in execution.resultats | sort(attribute="organe_def.ordre") %}
+    <tr>
+      <td class="col-organe">
+        <span class="cat-tag">{{ resultat.organe_def.categorie }}</span><br>
+        {{ resultat.organe_def.nom_organe }}
+      </td>
+      <td class="col-actions">
+        <ul>
+          {% for action in resultat.organe_def.actions.split('\n') %}
+            <li>{{ action }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td class="col-inspection">{{ resultat.inspection or "—" }}</td>
+      <td class="col-mp">{{ resultat.mp or "—" }}</td>
+      <td class="col-commentaire">{{ resultat.commentaire or "RAS" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="obs-titre">Observations :</p>
+<div class="obs-box">{{ execution.observations or "RAS" }}</div>
+
+<table class="table-signature">
+  <thead>
+    <tr>
+      <th class="label-ligne">Circuit</th>
+      <th>Technicien</th>
+      <th>Responsable BTM</th>
+      <th>Responsable maintenance CE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="label-ligne">Date</td>
+      <td>{{ execution.date_execution.strftime('%d/%m/%Y') }}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="label-ligne">Nom</td>
+      <td>{{ execution.technicien.prenom }} {{ execution.technicien.nom if execution.technicien else "" }}</td>
+      <td>Walid Ben Brahim</td>
+      <td>Aymen Dhbaibi</td>
+    </tr>
+    <tr>
+      <td class="label-ligne">Visa</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

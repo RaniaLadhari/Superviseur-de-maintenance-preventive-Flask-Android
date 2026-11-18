@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="#0D1117">
+ <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+   <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="COFAT Sense" android:textColor="#F2F2F2" android:textSize="22sp" android:textStyle="bold"/>
+   <TextView android:id="@+id/errorMachineTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="ERREURS — TCE-HIST" android:textColor="#8994A5" android:textSize="10sp"/>
+   <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="26dp" android:orientation="horizontal">
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.7" android:text="DATE" android:textColor="#8B95A7" android:textSize="8sp"/>
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="RÉFÉRENCE" android:textColor="#8B95A7" android:textSize="8sp"/>
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="3" android:text="TYPE" android:textColor="#8B95A7" android:textSize="8sp"/>
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.2" android:text="DURÉE" android:textColor="#8B95A7" android:textSize="8sp"/>
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.9" android:text="RÉSOLUE" android:textColor="#8B95A7" android:textSize="8sp"/>
+   </LinearLayout>
+   <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#29313D"/>
+   <LinearLayout android:id="@+id/errorContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
+   <TextView android:id="@+id/btnBackErrors" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="← Retour" android:textColor="#8D98A9" android:textSize="14sp"/>
+  </LinearLayout>
+ </ScrollView>
+ 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#171D26"
+        android:orientation="horizontal"
+        android:weightSum="6">
+        <TextView android:id="@+id/menuProduction" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="▣&#10;Production" android:textColor="#8A94A3" android:textSize="8sp"/>
+        <TextView android:id="@+id/menuErrors" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="⚠&#10;Erreurs" android:textColor="#8A94A3" android:textSize="8sp"/>
+        <TextView android:id="@+id/menuPrevention" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="⌁&#10;Prévention" android:textColor="#8A94A3" android:textSize="8sp"/>
+        <TextView android:id="@+id/menuInterventions" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="□&#10;Interventions" android:textColor="#8A94A3" android:textSize="8sp"/>
+        <TextView android:id="@+id/menuHealth" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="♥&#10;Health" android:textColor="#8A94A3" android:textSize="8sp"/>
+        <TextView android:id="@+id/menuCopilot" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="AI&#10;Copilot" android:textColor="#8A94A3" android:textSize="8sp"/>
+    </LinearLayout>
+
+</LinearLayout>

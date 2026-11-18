@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}COFAT Sense{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+        {% for category, message in messages %}
+          <div class="flash flash--{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% if current_user.is_authenticated %}
+  <nav class="sidebar">
+    <div class="sidebar-brand">COFAT <span>Sense</span></div>
+
+    <a href="{{ url_for('production.dashboard') }}" class="nav-link">Production</a>
+    <a href="{{ url_for('maintenance.liste_erreurs') }}" class="nav-link">Erreurs machine</a>
+    <a href="{{ url_for('maintenance.prevention_dashboard') }}" class="nav-link">Prévention (TCE)</a>
+    <a href="{{ url_for('maintenance.historique_interventions') }}" class="nav-link">Historique interventions</a>
+    <a href="{{ url_for('health.dashboard') }}" class="nav-link">Health Score</a>
+    <a href="{{ url_for('copilot.dashboard') }}" class="nav-link">Copilot IA</a>
+
+    <div class="sidebar-footer">
+      <span class="sidebar-user">{{ current_user.nom_complet }} — {{ current_user.role.value }}</span>
+      <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link--logout">Déconnexion</a>
+    </div>
+  </nav>
+  {% endif %}
+
+  <div class="page-content">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

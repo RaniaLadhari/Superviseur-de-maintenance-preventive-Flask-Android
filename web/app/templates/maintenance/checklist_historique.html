@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Checklist préventive — {{ machine.code }}{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width: 950px; margin: 0 auto;">
+
+  <div class="checklist-topbar">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h2>Checklist préventive — {{ machine.code }}</h2>
+        <p>Maintenance préventive table de contrôle électrique · <span class="frequence-highlight">Fréquence : {{ machine.checklist_template.frequence_jours if machine.checklist_template else 21 }} jours</span></p>      </div>
+      <div style="display:flex; gap:8px;">
+  <a href="{{ url_for('maintenance.checklist_export_excel', machine_id=machine.id, mois='%04d-%02d' % (annee, mois)) }}"
+     style="background:rgba(255,255,255,0.15); color:#fff; font-weight:600; font-size:13px; padding:9px 16px; border-radius:8px; text-decoration:none;">
+    Exporter Excel
+  </a>
+  <a href="{{ url_for('maintenance.checklist_nouvelle', machine_id=machine.id) }}"
+     style="background:#fff; color:#1d4ed8; font-weight:600; font-size:13px; padding:9px 16px; border-radius:8px; text-decoration:none;">
+    + Nouvelle checklist
+  </a>
+</div>
+    </div>
+  </div>
+
+  {% if derniere_execution %}
+    <div class="echeance-banner {{ 'retard' if jours_restants is not none and jours_restants < 0 else '' }}">
+      <span>
+        Dernière checklist le {{ derniere_execution.date_execution.strftime('%d %B %Y') }}
+        par {{ derniere_execution.technicien.prenom }} {{ derniere_execution.technicien.nom if derniere_execution.technicien else "" }}
+      </span>
+      <strong>
+        {% if jours_restants is not none and jours_restants < 0 %}
+          En retard de {{ -jours_restants }} jour(s)
+        {% elif jours_restants is not none %}
+          Prochaine échéance dans {{ jours_restants }} jour(s)
+        {% endif %}
+      </strong>
+    </div>
+  {% endif %}
+
+  <form method="get" style="margin: 0 0 16px;">
+    <label for="mois" style="font-size:13px; color:#6b7280;">Mois :</label>
+    <input type="month" id="mois" name="mois"
+           value="{{ '%04d-%02d' % (annee, mois) }}"
+           onchange="this.form.submit()">
+  </form>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-label">Checklists remplies</span>
+      <span class="stat-value">{{ executions|length }}</span>
+    </div>
+    <div class="stat-card {{ 'warn' if total_nok > 0 else 'ok' }}">
+      <span class="stat-label">Organes NOK détectés</span>
+      <span class="stat-value">{{ total_nok }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Techniciens impliqués</span>
+      <span class="stat-value">{{ nb_techniciens }}</span>
+    </div>
+    <div class="stat-card ok">
+      <span class="stat-label">Temps total (min)</span>
+      <span class="stat-value">{{ temps_total }}</span>
+    </div>
+  </div>
+
+  {% if executions %}
+    {% for e in executions %}
+      <div class="execution-card">
+        <div style="display:flex; align-items:center; gap:14px; flex:1;">
+          <div class="avatar-circle">
+            {{ e.technicien.nom[0] if e.technicien else "?" }}{{ e.technicien.prenom[0] if e.technicien else "" }}
+          </div>
+          <div style="flex:1;">
+            <p style="margin:0; font-weight:600; font-size:14px;">
+              {{ e.technicien.prenom }} {{ e.technicien.nom if e.technicien else "Inconnu" }}
+              <span style="color:#9ca3af; font-weight:400;">— {{ e.technicien.role.value if e.technicien else "" }}</span>
+            </p>
+            <p style="margin:2px 0 8px; font-size:12px; color:#6b7280;">
+              {{ e.date_execution.strftime('%d %B %Y') }} · Semaine {{ e.semaine }}
+              {% if e.duree_minutes %} · {{ e.duree_minutes }} min{% endif %}
+            </p>
+            <div class="progress-bar-bg" style="max-width:220px;">
+              <div class="progress-bar-fill {{ 'warn' if e.nb_nok > 0 else '' }}" style="width: {{ e.taux_conformite }}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="badge badge-success">{{ e.nb_ok }} OK</span>
+          {% if e.nb_nok > 0 %}
+            <span class="badge badge-danger">{{ e.nb_nok }} NOK</span>
+          {% endif %}
+          <span class="badge badge-neutral">{{ e.taux_conformite }}%</span>
+          <a href="{{ url_for('maintenance.checklist_detail', execution_id=e.id) }}" class="btn btn-sm">Voir</a>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="color:#9ca3af; text-align:center; padding:50px 0;">
+      Aucune checklist remplie pour ce mois.
+    </p>
+  {% endif %}
+
+</div>
+{% endblock %}

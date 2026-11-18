@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Health Score — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(700px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Health Score — Santé des machines</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">MACHINE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">SCORE</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">ERREURS (30J)</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">DERNIÈRE PRÉV.</th>
+        <th style="padding: 8px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem;">TENDANCE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in resultats %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 12px 0;">{{ r.machine.code }}</td>
+        <td style="padding: 12px 0;">
+          {% if r.score >= 80 %}
+            <span style="color: var(--ok); font-weight: 700; font-size: 1.1rem;">{{ r.score }}</span>
+          {% elif r.score >= 50 %}
+            <span style="color: var(--accent); font-weight: 700; font-size: 1.1rem;">{{ r.score }}</span>
+          {% else %}
+            <span style="color: var(--danger); font-weight: 700; font-size: 1.1rem;">{{ r.score }}</span>
+          {% endif %}
+          <span style="color: var(--text-muted); font-size: 0.75rem;">/100</span>
+        </td>
+        <td style="padding: 12px 0; color: var(--text-muted);">{{ r.frequence_erreurs }}</td>
+        <td style="padding: 12px 0; color: var(--text-muted);">
+          {% if r.jours_depuis_prevention is none %}
+            Jamais
+          {% else %}
+            Il y a {{ r.jours_depuis_prevention }}j
+          {% endif %}
+        </td>
+        <td style="padding: 12px 0;">
+          {% if r.tendance == "hausse" %}
+            <span style="color: var(--danger);">↗ Hausse</span>
+          {% elif r.tendance == "baisse" %}
+            <span style="color: var(--ok);">↘ Baisse</span>
+          {% else %}
+            <span style="color: var(--text-muted);">→ Stable</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="panel-footer">
+    <a href="{{ url_for('production.dashboard') }}" style="color: var(--text-muted);">← Dashboard Production</a>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

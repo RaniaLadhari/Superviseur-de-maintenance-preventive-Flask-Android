@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Rapport d'intervention — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(560px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Rapport d'intervention — {{ seance.machine.code }}</p>
+
+  <form method="POST">
+    <div class="field">
+      <label>TYPE D'ACTION</label>
+      <select name="type_action" style="width:100%; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 11px 12px; color: var(--text-primary);">
+        <option value="Prévention">Prévention</option>
+        <option value="Dépannage">Dépannage</option>
+        <option value="Réglage">Réglage</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>PROTOCOLE APPLIQUÉ</label>
+      <textarea name="protocole" rows="3" style="width:100%; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 11px 12px; color: var(--text-primary); font-family: var(--font-body);"></textarea>
+    </div>
+
+    <p class="eyebrow" style="margin-top: 20px;">Checklist COFAT</p>
+    {% for item in items %}
+    <div style="border-bottom: 1px solid var(--border); padding: 10px 0;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size: 0.9rem;">{{ item.organe }}</span>
+        <div style="display:flex; gap:12px;">
+          <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; color: var(--ok);">
+            <input type="radio" name="item_{{ item.id }}" value="ok"> OK
+          </label>
+          <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; color: var(--danger);">
+            <input type="radio" name="item_{{ item.id }}" value="nok"> NOK
+          </label>
+        </div>
+      </div>
+      <input type="text" name="commentaire_{{ item.id }}" placeholder="Commentaire (optionnel)"
+             style="width:100%; margin-top:6px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; color: var(--text-muted); font-size: 0.8rem;">
+    </div>
+    {% endfor %}
+
+    <div class="field" style="margin-top: 18px;">
+      <label>OBSERVATIONS GÉNÉRALES</label>
+      <textarea name="observations" rows="3" style="width:100%; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 11px 12px; color: var(--text-primary); font-family: var(--font-body);"></textarea>
+    </div>
+
+    <button type="submit" class="btn-primary" style="margin-top: 10px;">Enregistrer le rapport</button>
+  </form>
+</div>
+{% endblock %}

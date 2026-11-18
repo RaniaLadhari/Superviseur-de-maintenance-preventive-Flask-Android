@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Connexion — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot" title="Système en ligne"></span>
+  </div>
+  <p class="eyebrow">Portail Production &amp; Maintenance</p>
+
+  <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+    {{ form.hidden_tag() }}
+
+    <div class="field">
+      {{ form.email.label }}
+      {{ form.email(type="email", autocomplete="email", autofocus=true, placeholder="prenom.nom@exemple.com") }}
+      {% for erreur in form.email.errors %}
+        <div class="error">{{ erreur }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      {{ form.password.label }}
+      {{ form.password(type="password", autocomplete="current-password", placeholder="••••••••") }}
+      {% for erreur in form.password.errors %}
+        <div class="error">{{ erreur }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="field-check">
+      {{ form.remember() }}
+      {{ form.remember.label }}
+    </div>
+
+    {{ form.submit(class="btn-primary") }}
+  </form>
+
+  <div class="panel-footer">
+    <span>ACCÈS TECHNICIEN / RESPONSABLE</span>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

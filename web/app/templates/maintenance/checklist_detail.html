@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Checklist S{{ execution.semaine }} — {{ execution.machine.code }}{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width: 950px; margin: 0 auto;">
+
+  <div class="checklist-topbar">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h2>{{ execution.template.titre }}</h2>
+        <p>
+          {{ execution.machine.code }} · Semaine {{ execution.semaine }} ·
+          {{ execution.date_execution.strftime('%d %B %Y') }} ·
+          rempli par {{ execution.technicien.prenom }} {{ execution.technicien.nom if execution.technicien else "" }}
+          {% if execution.duree_minutes %} · {{ execution.duree_minutes }} min{% endif %}
+        </p>
+      </div>
+      <a href="{{ url_for('maintenance.checklist_export_pdf', execution_id=execution.id) }}"
+         style="background:#fff; color:#1d4ed8; font-weight:600; font-size:13px; padding:9px 16px; border-radius:8px; text-decoration:none;">
+        Exporter en PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card ok">
+      <span class="stat-label">Organes OK</span>
+      <span class="stat-value">{{ execution.nb_ok }}</span>
+    </div>
+    <div class="stat-card {{ 'warn' if execution.nb_nok > 0 else '' }}">
+      <span class="stat-label">Organes NOK</span>
+      <span class="stat-value">{{ execution.nb_nok }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Taux de conformité</span>
+      <span class="stat-value">{{ execution.taux_conformite }}%</span>
+    </div>
+  </div>
+
+  <div class="legende">
+    <span><i class="dot cat-mecanique"></i> Mécanique</span>
+    <span><i class="dot cat-electrique"></i> Électrique</span>
+    <span><i class="dot cat-pneumatique"></i> Pneumatique</span>
+    <span><i class="dot cat-informatique"></i> Informatique</span>
+    <span><i class="dot cat-securite"></i> Sécurité</span>
+  </div>
+
+  {% for resultat in execution.resultats %}
+    <div class="organe-card cat-{{ resultat.organe_def.categorie }}">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span class="categorie-tag cat-{{ resultat.organe_def.categorie }}">{{ resultat.organe_def.categorie }}</span>
+          <p class="organe-title">{{ resultat.organe_def.ordre }}. {{ resultat.organe_def.nom_organe }}</p>
+        </div>
+        <span class="badge {{ 'badge-success' if resultat.inspection == 'OK' else 'badge-danger' }}">
+          {{ resultat.inspection or "—" }}
+        </span>
+      </div>
+      <ul class="organe-actions">
+        {% for action in resultat.organe_def.actions.split('\n') %}
+          <li>{{ action }}</li>
+        {% endfor %}
+      </ul>
+      <p style="font-size:13px; color:#6b7280; margin:6px 0 0;">
+        M.P : {{ resultat.mp or "—" }} · Commentaire : {{ resultat.commentaire or "RAS" }}
+      </p>
+    </div>
+  {% endfor %}
+
+  <div class="organe-card">
+    <p class="organe-title">Observations générales</p>
+    <p>{{ execution.observations or "RAS" }}</p>
+  </div>
+
+</div>
+{% endblock %}

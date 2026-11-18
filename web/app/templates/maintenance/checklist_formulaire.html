@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle checklist — {{ machine.code }}{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width: 950px; margin: 0 auto;">
+
+  <div class="checklist-topbar">
+    <h2>{{ template.titre }}</h2>
+    <p>Référence {{ template.reference }} · Type machine {{ template.type_machine }} · Machine {{ machine.code }}</p>
+  </div>
+
+  <div class="legende">
+    <span><i class="dot cat-mecanique"></i> Mécanique</span>
+    <span><i class="dot cat-electrique"></i> Électrique</span>
+    <span><i class="dot cat-pneumatique"></i> Pneumatique</span>
+    <span><i class="dot cat-informatique"></i> Informatique</span>
+    <span><i class="dot cat-securite"></i> Sécurité</span>
+  </div>
+
+  <form method="post">
+
+    <div class="stats-row">
+      <div class="info-card"><span class="info-label">Code machine</span><span class="info-value">{{ machine.code }}</span></div>
+      <div class="info-card"><span class="info-label">Type machine</span><span class="info-value">{{ template.type_machine }}</span></div>
+      <div class="info-card">
+        <span class="info-label">Semaine</span>
+        <input type="number" name="semaine" required style="width:100%; border:none; font-size:15px; font-weight:600; background:transparent;">
+      </div>
+      <div class="info-card">
+        <span class="info-label">Fréquence</span>
+        <span class="info-value frequence-highlight">{{ template.frequence_jours }} jours</span>
+      </div>
+      <div class="info-card">
+        <span class="info-label">Durée (minutes)</span>
+        <input type="number" name="duree_minutes" placeholder="45" style="width:100%; border:none; font-size:15px; font-weight:600; background:transparent;">
+      </div>
+    </div>
+
+    {% for organe in template.organes %}
+      <div class="organe-card cat-{{ organe.categorie }}">
+        <span class="categorie-tag cat-{{ organe.categorie }}">{{ organe.categorie }}</span>
+        <p class="organe-title">{{ organe.ordre }}. {{ organe.nom_organe }}</p>
+        <ul class="organe-actions">
+          {% for action in organe.actions.split('\n') %}
+            <li>{{ action }}</li>
+          {% endfor %}
+        </ul>
+        <div class="organe-row">
+          <span>Inspection :</span>
+          <label><input type="radio" name="inspection_{{ organe.id }}" value="OK"> OK</label>
+          <label><input type="radio" name="inspection_{{ organe.id }}" value="NOK"> NOK</label>
+
+          <span style="margin-left:16px;">M.P :</span>
+          <label><input type="radio" name="mp_{{ organe.id }}" value="OK"> OK</label>
+          <label><input type="radio" name="mp_{{ organe.id }}" value="NOK"> NOK</label>
+        </div>
+        <input type="text" name="commentaire_{{ organe.id }}" placeholder="Commentaire (ex: RAS)"
+               style="width:100%; margin-top:8px; border:1px solid #e5e7eb; border-radius:6px; padding:6px 10px;">
+      </div>
+    {% endfor %}
+
+    <div class="organe-card">
+      <p class="organe-title">Observations générales</p>
+      <textarea name="observations" style="width:100%; min-height:60px; border:1px solid #e5e7eb; border-radius:6px; padding:8px;" placeholder="RAS"></textarea>
+    </div>
+
+    <div style="text-align:right; margin-top:16px;">
+      <button type="submit" class="btn btn-primary">Enregistrer la checklist</button>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

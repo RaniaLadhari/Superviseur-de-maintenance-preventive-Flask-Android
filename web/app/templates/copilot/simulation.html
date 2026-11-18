@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Simulateur — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(480px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Copilot — Simulateur "et si..."</p>
+
+  <form method="POST">
+    <div class="field">
+      <label>MACHINE</label>
+      <select name="machine_id" style="width:100%; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 11px 12px; color: var(--text-primary);">
+        {% for m in machines %}
+        <option value="{{ m.id }}">{{ m.code }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>ET SI LE SEUIL ÉTAIT DE...</label>
+      <input type="number" name="nouveau_seuil" value="30" min="1" style="width:100%; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 11px 12px; color: var(--text-primary);">
+    </div>
+    <button type="submit" class="btn-primary">Simuler</button>
+  </form>
+
+  {% if resultat %}
+  <div style="margin-top: 20px; padding: 14px; background: rgba(255,138,30,0.08); border: 1px solid var(--accent); border-radius: 4px;">
+    <p style="font-size:0.9rem; margin:0;">
+      Avec un seuil de <strong>{{ resultat.nouveau_seuil }}</strong> câbles sur <strong>{{ resultat.machine.code }}</strong>,
+      le total historique de <strong>{{ resultat.total_compt }}</strong> câbles comptés aurait déclenché environ
+      <strong style="color: var(--accent);">{{ resultat.nb_blocages_estimes }}</strong> blocage(s) automatique(s).
+    </p>
+  </div>
+  {% endif %}
+
+  <div class="panel-footer">
+    <a href="{{ url_for('copilot.dashboard') }}" style="color: var(--text-muted);">← Copilot</a>
+    <span>V1.0</span>
+  </div>
+</div>
+{% endblock %}

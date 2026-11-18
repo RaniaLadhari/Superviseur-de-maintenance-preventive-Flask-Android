@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1117"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- ================================================= -->
+        <!-- TITRE -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nouvelle checklist"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- ================================================= -->
+        <!-- MACHINE -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:id="@+id/tvMachine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Machine : TCE-02"
+            android:textColor="#FF851B"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <!-- ================================================= -->
+        <!-- CHECKLIST -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#18212C">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Checklist"
+                android:textColor="#8994A5"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvChecklistTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Checklist préventive"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvChecklistReference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Référence : -"
+                android:textColor="#8994A5"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <!-- ================================================= -->
+        <!-- DATE -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Date d'exécution"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtDate"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="7dp"
+            android:hint="AAAA-MM-JJ"
+            android:inputType="date"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#8994A5"
+            android:backgroundTint="#FF851B" />
+
+        <!-- ================================================= -->
+        <!-- DUREE -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Durée (minutes)"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtDuree"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="7dp"
+            android:hint="Exemple : 45"
+            android:inputType="number"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#8994A5"
+            android:backgroundTint="#FF851B" />
+
+        <!-- ================================================= -->
+        <!-- OBSERVATIONS -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Technicien"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtObservations"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginTop="7dp"
+            android:gravity="top|start"
+            android:hint="Ajouter un nom..."
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#8994A5"
+            android:backgroundTint="#FF851B" />
+
+        <!-- ================================================= -->
+        <!-- TERMINEE -->
+        <!-- ================================================= -->
+
+        <CheckBox
+            android:id="@+id/checkTerminee"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:text="Checklist terminée"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:buttonTint="#FF851B" />
+
+        <!-- ================================================= -->
+        <!-- BOUTONS -->
+        <!-- ================================================= -->
+
+        <Button
+            android:id="@+id/btnSaveChecklist"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="25dp"
+            android:text="Enregistrer la checklist"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="#FF851B" />
+
+        <Button
+            android:id="@+id/btnCancelChecklist"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:text="Annuler"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textAllCaps="false"
+            android:backgroundTint="#26313D" />
+
+    </LinearLayout>
+
+</ScrollView>

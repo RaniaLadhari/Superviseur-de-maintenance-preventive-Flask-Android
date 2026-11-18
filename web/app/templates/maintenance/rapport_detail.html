@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Rapport — COFAT Sense{% endblock %}
+
+{% block content %}
+<div class="panel" style="width: min(620px, 100%);">
+  <div class="panel-header">
+    <span class="brand">COFAT <span>Sense</span></span>
+    <span class="status-dot"></span>
+  </div>
+  <p class="eyebrow">Rapport — {{ rapport.seance.machine.code }}</p>
+
+  <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+    <tr>
+      <td style="padding: 4px 0; color: var(--text-muted); font-size: 0.82rem; width: 140px;">Technicien</td>
+      <td style="padding: 4px 0; font-size: 0.9rem;">{{ rapport.technicien.nom_complet }}</td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 0; color: var(--text-muted); font-size: 0.82rem;">Date</td>
+      <td style="padding: 4px 0; font-size: 0.9rem;">{{ rapport.date_intervention.strftime("%d/%m/%Y %H:%M") }}</td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 0; color: var(--text-muted); font-size: 0.82rem;">Type d'action</td>
+      <td style="padding: 4px 0; font-size: 0.9rem;">{{ rapport.type_action }}</td>
+    </tr>
+  </table>
+
+  {% if rapport.protocole %}
+  <p class="eyebrow">Protocole</p>
+  <p style="font-size:0.88rem; color: var(--text-primary); margin-top: -8px; margin-bottom: 20px;">{{ rapport.protocole }}</p>
+  {% endif %}
+
+  <p class="eyebrow">Checklist</p>
+  <table style="width:100%; border-collapse: collapse; margin-top: 6px; margin-bottom: 20px;">
+    <thead>
+      <tr style="text-align:left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 6px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem;">ORGANE</th>
+        <th style="padding: 6px 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem; text-align:right;">STATUT</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in rapport.checklist_items %}
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 0; font-size: 0.85rem; vertical-align: top;">
+          {{ c.item_def.organe }}
+          {% if c.commentaire %}
+          <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 2px;">{{ c.commentaire }}</div>
+          {% endif %}
+        </td>
+        <td style="padding: 8px 0; text-align:right; white-space: nowrap; vertical-align: top;">
+          {% if c.statut_ok is none %}
+            <span style="color: var(--text-muted); font-size: 0.8rem;">Non renseigné</span>
+          {% elif c.statut_ok %}
+            <span style="color: var(--ok); font-weight: 600;">OK</span>
+          {% else %}
+            <span style="color: var(--danger); font-weight: 600;">NOK</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if rapport.observations %}
+  <p class="eyebrow">Observations</p>
+  <p style="font-size:0.88rem; color: var(--text-primary); margin-top: -8px;">{{ rapport.observations }}</p>
+  {% endif %}
+
+  <div class="panel-footer" style="justify-content: flex-start; gap: 20px;">
+    <a href="{{ url_for('maintenance.prevention_dashboard') }}" style="color: var(--text-muted);">← Retour</a>
+    <a href="{{ url_for('maintenance.telecharger_pdf_rapport', rapport_id=rapport.id) }}" style="color: var(--accent);">Télécharger PDF ↓</a>
+  </div>
+</div>
+{% endblock %}
